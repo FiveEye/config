@@ -1,0 +1,19 @@
+c_sources := hw11.c hw12.c hw13.c
+
+c_objects := $(c_sources:%.c=%.o)
+c_targets := $(c_sources:%.c=%)
+
+CC = gcc
+CFLAGS = -g -w -std=c99
+
+default: c
+
+clean: c_clean
+
+c: $(c_targets)
+
+$(c_targets): %: %.c
+	$(CC) $(CFLAGS) -o $@ $<
+
+c_clean:
+	rm -f $(c_objects) $(c_targets)

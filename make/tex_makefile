@@ -1,0 +1,23 @@
+tex_sources := summary11.tex summary10.tex
+tex_targets := $(tex_sources:%.tex=%.pdf)
+
+
+default: pdf
+
+clean: tex_clean
+
+
+pdf: $(tex_targets)
+
+$(tex_sources:%.tex=%.dvi): %.dvi: %.tex
+	latex $<
+
+$(tex_sources:%.tex=%.ps): %.ps: %.dvi
+	dvips -R -Poutline -t letter $< -o $@
+
+$(tex_targets): %.pdf: %.ps
+	ps2pdf $<
+
+tex_clean: 
+	rm -f $(tex_sources:%.tex=%.dvi) $(tex_sources:%.tex=%.ps)  $(tex_sources:%.tex=%.log) $(tex_sources:%.tex=%.aux) $(tex_targets)
+
